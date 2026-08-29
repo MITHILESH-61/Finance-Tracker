@@ -36,7 +36,8 @@ app.use(cors({
       !origin ||
       allowedOrigins.includes(origin) ||
       /^http:\/\/localhost:\d+$/.test(origin) ||
-      /^http:\/\/127\.0\.0\.1:\d+$/.test(origin)
+      /^http:\/\/127\.0\.0\.1:\d+$/.test(origin) ||
+      /vercel\.app$/.test(origin)
     ) {
       return callback(null, true);
     }
@@ -81,7 +82,16 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/reports', reportRoutes);
 
-// Health check
+// Health check & Root info
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ok',
+    service: 'FinTrack API',
+    message: 'Backend server is active and healthy',
+    timestamp: new Date().toISOString()
+  });
+});
+
 app.get('/health', (req, res) => {
   res.json({ status: 'Server is running' });
 });

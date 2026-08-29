@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import dns from 'dns';
+
 
 // Load environment variables FIRST, before anything else
 const __filename = fileURLToPath(import.meta.url);
@@ -9,7 +9,6 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.join(__dirname, '.env') });
 
 // Fix for Node's DNS resolver failing on SRV lookups (common Windows issue)
-dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 // Debug: Check if MONGODB_URI is loaded
 console.log('Environment variables loaded');
