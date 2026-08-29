@@ -2,7 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { logout } from '../../redux/slices/authSlice'
 
-function Sidebar() {
+function Sidebar({ isOpen = false, onClose = () => {} }) {
   const location = useLocation()
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -19,14 +19,16 @@ function Sidebar() {
   const isActive = (path) => location.pathname === path
 
   const handleLogout = () => {
+    onClose()
     dispatch(logout())
     navigate('/login')
   }
 
-  return (
-    <aside className="sticky top-0 flex h-screen w-64 shrink-0 flex-col bg-[#0f172a] text-white border-r border-slate-800 shadow-xl">
+  // Sidebar content (Shared between desktop and mobile drawer)
+  const renderSidebarContent = (isMobile = false) => (
+    <div className="flex h-full flex-col">
       {/* Brand Header */}
-      <div className="border-b border-slate-800/80 px-6 py-6">
+      <div className="flex items-center justify-between border-b border-slate-800/80 px-6 py-6">
         <div className="flex items-center gap-2.5">
           <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-indigo-600 to-emerald-400 text-lg shadow-md">
             📈
@@ -40,6 +42,18 @@ function Sidebar() {
             </p>
           </div>
         </div>
+
+        {/* Mobile Close Button */}
+        {isMobile && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white"
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
+        )}
       </div>
 
       {/* Nav links */}
@@ -53,6 +67,7 @@ function Sidebar() {
             <Link
               key={item.path}
               to={item.path}
+              onClick={onClose}
               className={`group flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 ${
                 active
                   ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-bold'
@@ -79,7 +94,33 @@ function Sidebar() {
           <span>Sign Out</span>
         </button>
       </div>
-    </aside>
+    </div>
+  )
+
+  return (
+    <>
+      {/* 1. Desktop Persistent Sidebar (Hidden on screens smaller than lg) */}
+      <aside className="hidden lg:flex lg:sticky lg:top-0 lg:h-screen lg:w-64 shrink-0 flex-col bg-[#0f172a] text-white border-r border-slate-800 shadow-xl">
+        {renderSidebarContent(false)}
+      </aside>
+
+      {/* 2. Mobile & Tablet Drawer (Active when isOpen is true) */}
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex lg:hidden">
+          {/* Backdrop Blur Overlay */}
+          <div
+            className="fixed inset-0 bg-slate-950/65 backdrop-blur-xs transition-opacity animate-in fade-in duration-200"
+            onClick={onClose}
+            aria-hidden="true"
+          />
+
+          {/* Slide-over Panel */}
+          <div className="relative flex w-72 max-w-[85vw] flex-1 flex-col bg-[#0f172a] text-white shadow-2xl transition-transform animate-in slide-in-from-left duration-250">
+            {renderSidebarContent(true)}
+          </div>
+        </div>
+      )}
+    </>
   )
 }
 

@@ -256,7 +256,7 @@ function Dashboard() {
       {/* Main Charts Section */}
       <div className="grid gap-6 xl:grid-cols-3">
         {/* Monthly Spending Trend Bar Graph */}
-        <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm xl:col-span-2">
+        <section className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-sm xl:col-span-2">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-2">
@@ -314,7 +314,7 @@ function Dashboard() {
         </section>
 
         {/* Category Distribution Donut Chart */}
-        <section className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+        <section className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-sm">
           <div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -381,7 +381,7 @@ function Dashboard() {
       {/* Lower Row: Income vs Expense & Recent Activity */}
       <div className="grid gap-6 xl:grid-cols-3">
         {/* Income vs Expense Grouped Bar Chart */}
-        <section className="rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm xl:col-span-2">
+        <section className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-sm xl:col-span-2">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <div className="flex items-center gap-2">
@@ -446,7 +446,7 @@ function Dashboard() {
         </section>
 
         {/* Recent Transactions List */}
-        <section className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm">
+        <section className="flex flex-col justify-between rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-sm">
           <div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
